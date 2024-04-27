@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Translation API
+  version: 1.0.0
+  description: API for translating text from one language to another.
+
+servers:
+  - url: /api/v1
+
+paths:
+  /translate:
+    post:
+      summary: Translate text
+      description: Translates text from source language to target language.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to be translated.
+                  example: Hello, world!
+                source_lang:
+                  type: string
+                  description: Source language code (e.g., en, es, fr).
+                  example: en
+                target_lang:
+                  type: string
+                  description: Target language code (e.g., en, es, fr).
+                  example: es
+      responses:
+        200:
+          description: Successful translation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  translated_text:
+                    type: string
+                    description: Translated text.
+                  source_lang:
+                    type: string
+                    description: Detected source language code.
+                  target_lang:
+                    type: string
+                    description: Target language code.
+        400:
+          description: Bad request (e.g., missing parameter, invalid language code)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+        500:
+          description: Internal server error
+
+components:
+  securitySchemes:
+    # Add your API key security scheme here if needed
